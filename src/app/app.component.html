@@ -179,39 +179,70 @@
   <div class="content">
     <div class="card">
       <p-table
+        #dealsTable
+        datakey="id"
         styleClass="p-datatable-gridlines p-datatable-striped"
-        [value]="deals"
         [tableStyle]="{ 'min-width': '50rem' }"
+        [value]="deals"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
         [tableStyle]="{ 'min-width': '50rem' }"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 10, 20]"
+        currentPageReportTemplate="{first} to {last} of {totalRecords} deals"
+        [globalFilterFields]="['name', 'type', 'purchasePrice', 'address', 'noi', 'capRate']"
+        [showJumpToPageInput]="true"
       >
         <ng-template pTemplate="caption">
           <div class="flex align-items-center justify-content-between">
             Real State Deals
-            <p-button icon="pi pi-plus">Add New</p-button>
+            <!-- <p-button icon="pi pi-plus">Add New</p-button> -->
+          </div>
+
+          <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dealsTable.filterGlobal($any($event.target).value, 'contains')" placeholder="Search for anything" />
+            </span>
           </div>
         </ng-template>
 
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="name" style="width:20%">Code <p-sortIcon field="name"></p-sortIcon>Name</th>
-            <th pSortableColumn="type" style="width:20%">Code <p-sortIcon field="type"></p-sortIcon>Type</th>
-            <th pSortableColumn="purchasePrice" style="width:20%">Code <p-sortIcon field="purchasePrice"></p-sortIcon>Price ($)</th>
-            <th pSortableColumn="address" style="width:20%">Code <p-sortIcon field="address"></p-sortIcon>Address</th>
-            <th pSortableColumn="noi" style="width:20%">Code <p-sortIcon field="noi"></p-sortIcon>NOI</th>
-            <th pSortableColumn="capRate" style="width:20%">Code <p-sortIcon field="capRate"></p-sortIcon>Cap Rate</th>
+            <th pSortableColumn="id" style="">ID <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="name" style="min-width: 80px">Name <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="type" style="min-width: 80px">Type <p-sortIcon field="type"></p-sortIcon></th>
+            <th pSortableColumn="purchasePrice" style="min-width: 80px">Price ($) <p-sortIcon field="purchasePrice"></p-sortIcon></th>
+            <th pSortableColumn="address" style="min-width: 80px">Address <p-sortIcon field="address"></p-sortIcon></th>
+            <th pSortableColumn="noi" style="min-width: 80px">NOI <p-sortIcon field="noi"></p-sortIcon></th>
+            <th pSortableColumn="capRate" style="min-width: 80px">Cap Rate <p-sortIcon field="capRate"></p-sortIcon></th>
+          </tr>
+
+          <tr>
+            <th> <p-columnFilter type="text" field="id"></p-columnFilter> </th>
+            <th> <p-columnFilter type="text" field="name" matchMode="contains"></p-columnFilter> </th>
+            <th>
+              <p-columnFilter type="text" field="type" ></p-columnFilter>
+              <!-- <p-columnFilter field="type" matchMode="equals" display="menu">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [options]="typesOptions" (onChange)="filter($event.value)" placeholder="Any">
+                        <ng-template let-option pTemplate="item">
+                            <p-tag [value]="option.label"></p-tag>
+                        </ng-template>
+                    </p-dropdown>
+                </ng-template>
+              </p-columnFilter> -->
+            </th>
+            <th> <p-columnFilter type="numeric" field="purchasePrice"></p-columnFilter> </th>
+            <th> <p-columnFilter type="text" field="address" matchMode="contains"></p-columnFilter> </th>
+            <th> <p-columnFilter type="numeric" field="noi"></p-columnFilter> </th>
+            <th> <p-columnFilter type="numeric" field="capRate"></p-columnFilter> </th>
           </tr>
         </ng-template>
 
-        <ng-template
-          pTemplate="body"
-          let-deal
-        >
+        <ng-template pTemplate="body" let-deal>
           <tr>
+            <td>{{ deal.id }}</td>
             <td>{{ deal.name }}</td>
             <td>{{ deal.type }}</td>
             <td>{{ deal.purchasePrice }}</td>
