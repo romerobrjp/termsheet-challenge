@@ -22,12 +22,12 @@ export class DealEditComponent {
 
     this.dealService.currentDeal.subscribe(value => {
       this.deal = value;
-      this.dealForm.controls['name'].setValue(this.deal?.name);
-      this.dealForm.controls['type'].setValue(this.deal?.type);
-      this.dealForm.controls['address'].setValue(this.deal?.address);
-      this.dealForm.controls['capRate'].setValue(this.deal?.capRate);
-      this.dealForm.controls['noi'].setValue(this.deal?.noi);
-      this.dealForm.controls['purchasePrice'].setValue(this.deal?.purchasePrice);
+      this.dealForm.get('name')?.patchValue(this.deal?.name);
+      this.dealForm.get('type')?.patchValue(this.deal?.type);
+      this.dealForm.get('address')?.patchValue(this.deal?.address);
+      this.dealForm.get('capRate')?.patchValue(this.deal?.capRate);
+      this.dealForm.get('noi')?.patchValue(this.deal?.noi);
+      this.dealForm.get('purchasePrice')?.patchValue(this.deal?.purchasePrice);
     });
   }
 
@@ -45,12 +45,12 @@ export class DealEditComponent {
   submitForm(): void {
     const dealToUpdate: RealEstateDeal = {
       id: this.deal?.id || 0,
-      name: this.dealForm.controls['name'].value,
-      type: this.dealForm.controls['type'].value,
-      address: this.dealForm.controls['address'].value,
-      capRate: this.dealForm.controls['capRate'].value,
-      noi: this.dealForm.controls['noi'].value,
-      purchasePrice: this.dealForm.controls['purchasePrice'].value,
+      name: this.dealForm.get('name')?.value,
+      type: this.dealForm.get('type')?.value,
+      address: this.dealForm.get('address')?.value,
+      capRate: this.dealForm.get('capRate')?.value,
+      noi: this.dealForm.get('noi')?.value,
+      purchasePrice: this.dealForm.get('purchasePrice')?.value,
     }
 
     this.dealService.updateDeal(dealToUpdate);
