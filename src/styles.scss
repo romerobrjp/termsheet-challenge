@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+@media screen and (max-width: 767px) {
+  .content {
+    margin: auto 10px;
+  } 
+}
+
+.content {
+  margin: auto 10%;
+}
+
+.p-button.p-button-primary,
+.p-inputnumber-button {
+  background-color: #f97316;
+  border-color: #f97316;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  color: #f97316;
+  background: #fff8ef;
+  border-color: #fff9ef;
+}
+
+.p-inputtext:enabled:hover,
+.p-dropdown .p-dropdown-trigger:hover,
+.p-dropdown:not(.p-disabled):hover,
+.p-inputtext:enabled:focus {
+  border-color: #f97316;
+}
+
+.p-dropdown:not(.p-disabled).p-focus,
+.p-inputtext:enabled:focus {
+  box-shadow: 0 0 0 0.2rem #fee6bf
+}

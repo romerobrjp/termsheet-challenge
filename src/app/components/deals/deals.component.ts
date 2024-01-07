@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RealEstateDeal } from '../../shared/domain/real-state-deal';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { LabelValue } from '../../shared/domain/label-value';
+import { RealEstateDeal } from '../../shared/domain/real-state-deal';
+import { DealService } from '../../shared/services/deal.service';
 import { SharedModule } from '../../shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import * as DealActions from '../../store/deal.actions';
 
 @Component({
   selector: 'app-deals',
@@ -15,8 +18,7 @@ export class DealsComponent implements OnInit {
   deals: RealEstateDeal[] = [];
   typesOptions: LabelValue[] = [];  
 
-  constructor() {
-    this.deals = this.generateListOfDeals(25);
+  constructor(private router: Router, private dealService: DealService, private store: Store<{ deal: { deal: RealEstateDeal } }>) {
     this.typesOptions = [
       { label: 'Acquisition', value: 'acquisition' },
       { label: 'Lease', value: 'lease' },
@@ -25,7 +27,17 @@ export class DealsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('>> onInit', this.deals);    
+    this.dealService.deals$.subscribe({
+      next: (deals) => {        
+        if (!deals || deals.length === 0) {
+          this.deals = this.generateListOfDeals(52);
+          this.dealService.deals$ = this.deals;
+        } else {
+          console.log('>> else', deals);
+          this.deals = deals;
+        }
+      }
+    })
   }
 
   generateRandomDeal(): RealEstateDeal {
@@ -64,7 +76,7 @@ export class DealsComponent implements OnInit {
     // Calculate the cap rate using the valid NOI
     const capRate = (validNOI / purchasePrice) * 100;
   
-    return Number(capRate.toFixed(4));
+    return Number(capRate.toFixed(2));
   }
 
   generateListOfDeals(numDeals: number): RealEstateDeal[] {
@@ -75,5 +87,21 @@ export class DealsComponent implements OnInit {
       deals.push(deal);
     }
     return deals;
+  }
+
+  viewDeal($event: any, deal: RealEstateDeal) {
+    console.log('> view deal $event.target.value:', $event.target.value);
+    this.selectDeal(deal);
+    this.router.navigate([`deal/${deal.id}`]);
+  }
+
+  goEditDeal($event: any, deal: RealEstateDeal) {
+    this.selectDeal(deal);
+    this.router.navigate([`deal/${deal.id}/edit`]);
+  }
+
+  selectDeal(deal: RealEstateDeal): void {
+    this.dealService.saveDeal(deal);
+    this.store.dispatch(DealActions.saveDeal({ deal: deal }));
   }
 }

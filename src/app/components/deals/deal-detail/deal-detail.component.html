@@ -1,0 +1,24 @@
+<div class="content w-3 m-auto">
+  <p-panel header="Deal details">
+    <ul>
+      <li><span class='detail-line'>ID:</span> {{ deal?.id }}</li>
+      <li><span class='detail-line'>Name:</span> {{ deal?.name }}</li>
+      <li><span class='detail-line'>Type:</span> {{ deal?.type }}</li>
+      <li><span class='detail-line'>Address:</span> {{ deal?.address }}</li>
+      <li><span class='detail-line'>CapRate:</span> {{ deal?.capRate }}%</li>
+      <li><span class='detail-line'>NOI:</span> {{ deal?.noi | currency:'USD':'symbol':'2.2-2' }}</li>
+      <li><span class='detail-line'>Purchase Price ($):</span> {{ deal?.purchasePrice | currency:'USD':'symbol':'2.2-2' }}</li>
+    </ul>
+
+    <p-toolbar class='mt-5'>
+      <div class="p-toolbar-group-start">
+        <button
+          pButton
+          icon="pi pi-arrow-left"
+          class="p-button-primary mr-2"
+          [routerLink]="['/deals']"
+        >&nbsp;Back</button>
+      </div>
+    </p-toolbar>
+  </p-panel>
+</div>

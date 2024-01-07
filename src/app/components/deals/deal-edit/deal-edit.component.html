@@ -1,0 +1,61 @@
+<div class="mt-5 mb-5 ml-auto mr-auto w-6">
+  <form [formGroup]="dealForm" (ngSubmit)="submitForm()">
+    <p-card header="Deal edit">
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="name">Name</label>
+        <input pInputText id="name" aria-describedby="name-help" formControlName='name' />
+        <small id="name-help">What is the deal name?</small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="name">Type</label>
+        <input pInputText id="type" aria-describedby="type-help" formControlName='type' />
+        <small id="name-help">(Acquisition, Lease, Development)</small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="address">Adress</label>
+        <input pInputText id="type" aria-describedby="type-help" formControlName='address' />
+        <small id="address-help">What is the deal type?</small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="capRate">Cap Rate</label>
+        <input pInputText id="type" aria-describedby="type-help" formControlName='capRate' />
+        <small id="capRate-help">Tip: CApRate = NOI / Purchase Price (%)</small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="noi">NOI</label>
+        <input pInputText id="type" aria-describedby="type-help" formControlName='noi' />
+        <small id="noi-help">(Net Operating Income) ($)</small>
+      </div>
+
+      <div class="flex flex-column gap-2 mb-5">
+        <label for="purchasePrice">Purchase Price</label>
+        <input pInputText id="type" aria-describedby="type-help" formControlName='purchasePrice' />
+        <small id="purchasePrice-help">What is the deal type?</small>
+      </div>
+
+      <p-toolbar class='mt-5'>
+        <div class="p-toolbar-group-start">
+          <button
+            pButton
+            icon="pi pi-arrow-left"
+            class="p-button-secondary mr-2"
+            [routerLink]="['/deals']"
+          >&nbsp;Back</button>
+        </div>
+    
+        <div class="p-toolbar-group-end">
+          <button
+            pButton
+            icon="pi pi-arrow-disk"
+            class="p-button-primary mr-2"
+            type='submit'
+          >&nbsp;Submit</button>
+        </div>
+      </p-toolbar>
+    </p-card> 
+  </form>  
+</div>

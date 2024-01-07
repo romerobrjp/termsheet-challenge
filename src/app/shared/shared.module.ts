@@ -1,18 +1,26 @@
-import { NgModule } from '@angular/core';
+import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToolbarModule } from 'primeng/toolbar';
 
 const PRIMENG_MODULES = [
   ButtonModule,
   TableModule,
   DropdownModule,
   TagModule,
+  PanelModule,
+  CardModule,
+  InputTextModule,
+  ToastModule,
+  ToolbarModule,
 ];
 
 @NgModule({
@@ -20,8 +28,6 @@ const PRIMENG_MODULES = [
   imports: [
     CommonModule,
     RouterModule,
-    // BrowserModule,
-    // BrowserAnimationsModule,
     ...PRIMENG_MODULES,
   ],
   exports: [
