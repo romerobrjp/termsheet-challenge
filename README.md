@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Users should be able to click on a deal from the list and be redirected to a deal details page.
 - The user should also be able to return to the list page.    
 
-### All requirements were implemented, please check the video: https://drive.google.com/file/d/1eKFsQcy4FutYWomTulJn9nT44RCjWmje/view?usp=sharing
+### Check the short demo video to see all the requirements in action: https://drive.google.com/file/d/1eKFsQcy4FutYWomTulJn9nT44RCjWmje/view?usp=sharing
 
 ### The following Angular features were leveraged for this challenge:
 - Lazy Loading Routes: Optimized loading of application sections for better performance.
