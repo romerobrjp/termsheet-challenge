@@ -1,27 +1,30 @@
-# TermsheetChallenge
+# TermSheet challenge
+
+![2024-01-08 04_20_35-TermSheet_ Real Estate Deals - Personal - Microsoft​ Edge](https://github.com/romerobrjp/termsheet-challenge/assets/638656/544a6d3d-794d-4f73-a5a9-368fd807558c)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
 
-## Development server
+### Challenge requirements:
+- User will be taken to deal listing screen where user can see a table of pre-filled deals (again, hard-coded, no API)                                              
+- Users should have the ability to add and edit deals with the above details. The user should be able to add one or more deals at once.
+- Users should be able to filter the list by at least two fields of their choice.
+- Users should be able to click on a deal from the list and be redirected to a deal details page.
+- The user should also be able to return to the list page.    
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### All requirements were implemented, please check the video: https://drive.google.com/file/d/1eKFsQcy4FutYWomTulJn9nT44RCjWmje/view?usp=sharing
 
-## Code scaffolding
+### The following Angular features were leveraged for this challenge:
+- Lazy Loading Routes: Optimized loading of application sections for better performance.
+- Module Sharing: Efficient sharing of modules for scalability and reusability.
+- Service & State Management: Centralized data management and sharing via services and state management libraries.
+- Observables: Leveraged to handle asynchronous operations and data streams.
+- BehaviorSubject: Used to manage and share observable data among different parts of the application.
+- Cleanup with OnDestroy: Proper subscription management to prevent memory leaks.
+- Reactive Forms: Employed for form handling, multiple forms management, and validation.
+- Pipes: Currency pipe used to transform data.
+- Dialogs: Implementation of modal dialogs for user interaction.
+- Custom Styling with SCSS: Custom styling for enhanced UI/UX.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Extras
+- Cap rate calculation, considering a range from 5% to 12%.
+- Utilization of PrimeNG to expedite development and customization.
