@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChild, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LabelValue } from '../../shared/domain/label-value';
@@ -6,91 +6,94 @@ import { RealEstateDeal } from '../../shared/domain/real-state-deal';
 import { DealService } from '../../shared/services/deal.service';
 import { SharedModule } from '../../shared/shared.module';
 import * as DealActions from '../../store/deal.actions';
+import { MessageService } from 'primeng/api';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-deals',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, DialogModule, ReactiveFormsModule],
   templateUrl: './deals.component.html',
   styleUrl: './deals.component.scss'
 })
-export class DealsComponent implements OnInit {
+export class DealsComponent implements OnInit, OnDestroy {
   deals: RealEstateDeal[] = [];
-  typesOptions: LabelValue[] = [];  
+  typesOptions: LabelValue[] = [];
+  showDialog: boolean = false;
+  newDealForm!: FormGroup;
+  // @ContentChild('dealFormInputs') dealFormInputsTemplateRef!: TemplateRef<any>;
+  @ViewChild('dataTableRef') dataTableRef: any;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private dealService: DealService, private store: Store<{ deal: { deal: RealEstateDeal } }>) {
+  constructor(
+    private router: Router,
+    private dealService: DealService,
+    private store: Store<{ deal: { deal: RealEstateDeal } }>,
+    private formBuilder: FormBuilder,
+    private messageService: MessageService,
+  ) {
     this.typesOptions = [
-      { label: 'Acquisition', value: 'acquisition' },
-      { label: 'Lease', value: 'lease' },
-      { label: 'Development', value: 'development' },
+      { label: 'Acquisition', value: 'Acquisition' },
+      { label: 'Lease', value: 'Lease' },
+      { label: 'Development', value: 'Development' },
     ];
   }
 
   ngOnInit(): void {
-    this.dealService.deals$.subscribe({
-      next: (deals) => {        
-        if (!deals || deals.length === 0) {
-          this.deals = this.generateListOfDeals(52);
-          this.dealService.deals$ = this.deals;
-        } else {
-          console.log('>> else', deals);
-          this.deals = deals;
+    this.subscriptions.push(
+      this.dealService.deals$.subscribe({
+        next: (deals) => {
+          if (!deals || deals.length === 0) {
+            this.deals = this.dealService.generateListOfDeals(52);
+            this.dealService.deals$ = this.deals;
+          }
+          else {
+            this.deals = deals;
+          }
         }
-      }
-    })
+      }))
+
+    this.initForm();
   }
 
-  generateRandomDeal(): RealEstateDeal {
-    const id = 0;
-    const dealTypes = ['Acquisition', 'Lease', 'Development'];
-    const name = `Deal ${Math.floor(Math.random() * 1000)}`;
-    const type = dealTypes[Math.floor(Math.random() * dealTypes.length)] as 'Acquisition' | 'Lease' | 'Development';
-    const purchasePrice = Math.floor(Math.random() * 1000000) + 50000; // Random purchase price between $50,000 and $1,050,000
-    const address = `Address ${Math.floor(Math.random() * 1000)}`;
-    const noi = Math.floor(Math.random() * 50000) + 1000; // Random NOI between $1,000 and $50,000
-    const capRate = this.generateRandomCapRate(noi, purchasePrice);
-  
-    return {
-      id,
-      name,
-      type,
-      purchasePrice,
-      address,
-      noi,
-      capRate,
-    };
-  }
-
-  generateRandomCapRate(NOI: number, purchasePrice: number): number {
-    // Generate a random cap rate within the range of 5% to 12%
-    const minCapRate = 5;
-    const maxCapRate = 12;
-    
-    // Calculate the maximum and minimum possible NOI based on the cap rate range
-    const minNOI = purchasePrice * (minCapRate / 100);
-    const maxNOI = purchasePrice * (maxCapRate / 100);
-  
-    // Ensure the provided NOI is within the possible range, if not, use minNOI or maxNOI
-    const validNOI = Math.min(Math.max(NOI, minNOI), maxNOI);
-  
-    // Calculate the cap rate using the valid NOI
-    const capRate = (validNOI / purchasePrice) * 100;
-  
-    return Number(capRate.toFixed(2));
-  }
-
-  generateListOfDeals(numDeals: number): RealEstateDeal[] {
-    const deals: RealEstateDeal[] = [];
-    for (let i = 0; i < numDeals; i++) {
-      let deal = this.generateRandomDeal();
-      deal.id = i+1;
-      deals.push(deal);
+  ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription?.unsubscribe();
     }
-    return deals;
+  }
+
+  private initForm() {
+    this.newDealForm = this.formBuilder.group({
+      newDealFormSections: this.formBuilder.array([
+        this.formBuilder.group({
+          name: ['', Validators.required],
+          type: ['', Validators.required],
+          address: ['', Validators.required],
+          capRate: ['', Validators.required],
+          noi: ['', Validators.required],
+          purchasePrice: ['', Validators.required],
+        })
+      ]),
+    });
+  }
+
+  getSeverity(dealType: string): string {
+    switch (dealType) {
+      case 'Acquisition':
+        return 'success';
+      case 'Lease':
+        return 'primary';
+      case 'Development':
+        return 'warning';
+      default:
+        return 'info';
+    }
   }
 
   viewDeal($event: any, deal: RealEstateDeal) {
-    console.log('> view deal $event.target.value:', $event.target.value);
     this.selectDeal(deal);
     this.router.navigate([`deal/${deal.id}`]);
   }
@@ -103,5 +106,75 @@ export class DealsComponent implements OnInit {
   selectDeal(deal: RealEstateDeal): void {
     this.dealService.saveDeal(deal);
     this.store.dispatch(DealActions.saveDeal({ deal: deal }));
+  }
+
+  refreshPaginator() {
+    this.dataTableRef.paginate({ first: 0, rows: this.dataTableRef.rows });
+  }
+
+  // 'Add New Deal' dialog -->
+
+  openNew() {
+    this.showDialog = true;
+  }
+
+  hideDialog() {
+    this.showDialog = false;
+  }
+
+  submitForm() {
+    if (this.newDealForm.valid) {
+      const formSections = this.newDealForm.get('newDealFormSections') as FormArray;
+  
+      for (let i = 1; i <= formSections.length; i++) {
+        this.dealService.addDeal({
+          id: this.deals.length + 1,
+          ...formSections.at(i - 1).value
+        });
+      }
+  
+      // Reset form, refresh paginator, close dialog
+      this.newDealForm.reset();
+      // this.refreshPaginator();
+      this.dataTableRef.first = 0; // Go to the first page
+      this.dataTableRef.reset(); // Reset filters if applicable
+      this.showDialog = false;
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: `${formSections.length} Deals created` });
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: `Error while trying to create Deals. Try again later.` });
+    }
+  }
+
+  get newDealFormSections(): FormArray {
+    return this.newDealForm.get('newDealFormSections') as FormArray;
+  }
+
+  addNewDealFormSection(): void {
+    this.newDealFormSections.push(
+      this.formBuilder.group({
+        name: ['', Validators.required],
+        type: ['', Validators.required],
+        address: ['', Validators.required],
+        capRate: [0, Validators.required],
+        noi: [0, Validators.required],
+        purchasePrice: [0, Validators.required],
+      })
+    );
+  }
+
+  deleteNewDealFormSection(formIndex: number): void {
+    this.newDealFormSections.removeAt(formIndex);
+  }
+
+  getAsValidFormGroup(newDealForm: AbstractControl): FormGroup {
+    return newDealForm as FormGroup;
+  }
+
+  isAllSectionsValid(): boolean {
+    return this.newDealFormSections.controls.every(section => section.valid);
+  }
+  
+  hasRequiredError(section: any): boolean {
+    return section?.get('name')?.errors?.['required'] && section?.get('name')?.touched;
   }
 }

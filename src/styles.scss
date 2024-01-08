@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 
+:root {
+  --color-primary: #f97316;
+}
+
 @media screen and (max-width: 767px) {
   .content {
     margin: auto 10px;
@@ -11,14 +15,18 @@
   margin: auto 10%;
 }
 
-.p-button.p-button-primary,
+.p-button.p-button-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
 .p-inputnumber-button {
-  background-color: #f97316;
-  border-color: #f97316;
+  background-color: #5A759E;
+  border-color: #dbdbdb;
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  color: #f97316;
+  color: var(--color-primary);
   background: #fff8ef;
   border-color: #fff9ef;
 }
@@ -27,10 +35,23 @@
 .p-dropdown .p-dropdown-trigger:hover,
 .p-dropdown:not(.p-disabled):hover,
 .p-inputtext:enabled:focus {
-  border-color: #f97316;
+  border-color: var(--color-primary);
 }
 
 .p-dropdown:not(.p-disabled).p-focus,
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem #fee6bf
+}
+
+td > p-button > button.p-button-icon-only {
+  color: #5A759E;
+}
+
+.p-dialog .p-dialog-footer {
+  padding: 1.5rem;
+}
+
+.form-error-message {
+  font-size: small;
+  color: var(--red-600);
 }

@@ -15,15 +15,12 @@ export const routes: Routes = [
   {
     path: 'deal/:id',
     loadComponent: () => import('./components/deals/deal-detail/deal-detail.component').then(m => m.DealDetailComponent),
-    providers: [
-      provideState({ name: dealFeatureKey, reducer: dealReducer })
-    ]
+    // providers: [
+    //   provideState({ name: dealFeatureKey, reducer: dealReducer })
+    // ]
   },
   {
     path: 'deal/:id/edit',
     loadComponent: () => import('./components/deals/deal-edit/deal-edit.component').then(m => m.DealEditComponent),
-    providers: [
-      provideState({ name: dealFeatureKey, reducer: dealReducer })
-    ]
   },
 ];
