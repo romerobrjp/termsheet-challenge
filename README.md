@@ -26,6 +26,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - **Custom Styling with SCSS:** Custom styling for enhanced UI/UX.
 - **Custom Loader Component:** Included a custom loader component for a seamless user experience.
 - **Interceptor:** Added an example of how to implement and register a interceptor.
+- **Angular 17 template syntax:** Utilized the new template syntax for directives like `@if` and `@for`
 
 ### Extras
 - Cap rate calculation, considering a range from 5% to 12%.
