@@ -1,4 +1,4 @@
-import { Component, ContentChild, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LabelValue } from '../../shared/domain/label-value';
@@ -10,14 +10,15 @@ import { MessageService } from 'primeng/api';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { Subscription } from 'rxjs';
+import { CapitalizePipe } from "../../shared/pipes/capitalize.pipe";
 
 
 @Component({
-  selector: 'app-deals',
-  standalone: true,
-  imports: [SharedModule, DialogModule, ReactiveFormsModule],
-  templateUrl: './deals.component.html',
-  styleUrl: './deals.component.scss'
+    selector: 'app-deals',
+    standalone: true,
+    imports: [SharedModule, DialogModule, ReactiveFormsModule, CapitalizePipe],
+    templateUrl: './deals.component.html',
+    styleUrl: './deals.component.scss'
 })
 export class DealsComponent implements OnInit, OnDestroy {
   deals: RealEstateDeal[] = [];
