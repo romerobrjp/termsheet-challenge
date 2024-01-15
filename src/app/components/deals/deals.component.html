@@ -87,8 +87,8 @@
   <ng-template pTemplate="content">
     <div [formGroup]="newDealForm">
       <div formArrayName="newDealFormSections">
-        <ng-container *ngFor="let section of newDealFormSections.controls; index as i">
-          <p-card [header]="'Create New Deal #' + (i+1)" [formGroupName]="i" class='mb-5'>
+        @for (section of newDealFormSections.controls; track $index) {
+          <p-card [header]="'Create New Deal #' + ($index+1)" [formGroupName]="$index" class='mb-5'>
             <div class="flex flex-column gap-2 mb-5">
               <label for="name">Name</label>
               <input pInputText id="name" aria-describedby="name-help" formControlName='name' />
@@ -132,7 +132,7 @@
           </p-card>
 
           <br /> <br />
-        </ng-container>
+        }
       </div>
     </div>
   </ng-template>
