@@ -55,3 +55,12 @@ td > p-button > button.p-button-icon-only {
   font-size: small;
   color: var(--red-600);
 }
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #5A759E, 0 0 30px #5A759E, 0 0 40px #5A759E, 0 0 50px #5A759E, 0 0 60px #5A759E;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #769bd3, 0 0 30px #769bd3, 0 0 40px #769bd3, 0 0 50px #769bd3, 0 0 60px #769bd3, 0 0 70px #769bd3;
+  }
+}

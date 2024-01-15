@@ -11,12 +11,13 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule
 import { DialogModule } from 'primeng/dialog';
 import { Subscription } from 'rxjs';
 import { CapitalizePipe } from "../../shared/pipes/capitalize.pipe";
+import { HighlightDirective } from '../../shared/directives/highlight.directive';
 
 
 @Component({
     selector: 'app-deals',
     standalone: true,
-    imports: [SharedModule, DialogModule, ReactiveFormsModule, CapitalizePipe],
+    imports: [SharedModule, DialogModule, ReactiveFormsModule, CapitalizePipe, HighlightDirective],
     templateUrl: './deals.component.html',
     styleUrl: './deals.component.scss'
 })
