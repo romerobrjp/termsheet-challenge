@@ -22,6 +22,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - **Cleanup with OnDestroy:** Proper subscription management to prevent memory leaks.
 - **Reactive Forms:** Employed for form handling, multiple forms management, and validation.
 - **Pipes:** Demonstrated the implementation of a custom pipe (CapitalizePipe) as an illustrative example. Additionally, leveraged the built-in Currency pipe from the Angular common module for currency formatting.
+- **Directives:** Demonstrated the implementation of a custom directive (appHighlight) as an illustrative example.
 - **Dialogs:** Implementation of modal dialogs for user interaction.
 - **Custom Styling with SCSS:** Custom styling for enhanced UI/UX.
 - **Custom Loader Component:** Included a custom loader component for a seamless user experience.
